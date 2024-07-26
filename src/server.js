@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-// import pino from 'pino-http';
 import logger from './db/logger/logger.js';
 
 import { env } from './utils/env.js';
@@ -11,14 +10,6 @@ const setupServer = () => {
 
   app.use(cors());
 
-  // const logger = pino({
-  //   transport: {
-  //     target: 'pino-pretty',
-  //     options: {
-  //       colorize: true,
-  //     },
-  //   },
-  // });
 
   app.use(logger);
 
