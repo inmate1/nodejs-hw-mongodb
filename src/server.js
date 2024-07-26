@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import pino from 'pino-http';
+// import pino from 'pino-http';
+import logger from './db/logger/logger.js';
 
 import { env } from './utils/env.js';
 import { getAllContacts, getContactById } from './services/contacts.js';
@@ -10,14 +11,14 @@ const setupServer = () => {
 
   app.use(cors());
 
-  const logger = pino({
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-      },
-    },
-  });
+  // const logger = pino({
+  //   transport: {
+  //     target: 'pino-pretty',
+  //     options: {
+  //       colorize: true,
+  //     },
+  //   },
+  // });
 
   app.use(logger);
 
@@ -44,16 +45,19 @@ const setupServer = () => {
     }
     res.status(200).json({
       status: '200',
-      massage: `Successfully found contact with id ${contactId}!`,
+      message: `Successfully found contact with id ${contactId}!`,
       data: contact,
     });
   });
-
 
   app.use((req, res, next) => {
     res.status(404).json({ message: 'Not found' });
   });
 
+  app.use((error, req, res, next) => {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  });
 
   const PORT = Number(env('PORT'));
   app.listen(PORT, () => {
