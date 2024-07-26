@@ -1,7 +1,3 @@
-// Шаг 3
-
-// Создайте свой кластер в mongodb и функцию initMongoConnection для установления соединения с ней в отдельном файле src/db/initMongoConnection.js.
-
 import mongoose from 'mongoose';
 
 import { env } from '../utils/env.js';
