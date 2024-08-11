@@ -23,17 +23,7 @@ export const getAllContacts = async ({
   if (filter.isFavourite !== undefined) {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
-  /* Замість цього коду */
-  // const contactsCount = await ContactsCollection
-  //   .find()
-  //   .merge(contactsQuery)
-  //   .countDocuments();
-  // const contacts = await contactsQuery
-  //   .skip(skip)
-  //   .limit(limit)
-  //   .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
-  //   .exec();
-  /* Ми можемо написати такий код */
+
   const [contactsCount, contacts] = await Promise.all([
     ContactsCollection.find().merge(contactsQuery).countDocuments(),
     contactsQuery
