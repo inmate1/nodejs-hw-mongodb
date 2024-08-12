@@ -10,7 +10,7 @@ export const createContactSchema = Joi.object({
   phoneNumber: Joi.string()
     .pattern(/^[0-9+\-() ]+$/)
     .required(),
-  email: Joi.string().email().min(3).max(20).required(),
+  email: Joi.string().email().min(3).max(20),
   isFavourite: Joi.boolean(),
   contactType: Joi.string()
     .min(3)
