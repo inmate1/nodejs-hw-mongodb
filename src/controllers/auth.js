@@ -1,4 +1,11 @@
-import { loginUser, logoutUser, refreshUserSession, registerUser } from '../services/auth.js';
+import {
+  loginUser,
+  logoutUser,
+  refreshUserSession,
+  registerUser,
+  requestSendToken,
+  resetPassword,
+} from '../services/auth.js';
 
 export const registerUserController = async (req, res, next) => {
   const payload = {
@@ -35,31 +42,29 @@ export const loginUserController = async (req, res, next) => {
   });
 };
 
-
-
 export const refreshUserSessionController = async (req, res, next) => {
-    const session = await refreshUserSession({
-      sessionId: req.cookies.sessionId,
-      refreshToken: req.cookies.refreshToken,
-    });
+  const session = await refreshUserSession({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
+  });
 
-    res.cookie('refreshToken', session.refreshToken, {
-      httpOnly: true,
-      expires: session.refreshTokenValidUntil,
-    });
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
 
-    res.cookie('sessionId', session._id, {
-      httpOnly: true,
-      expires: session.refreshTokenValidUntil,
-    });
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
 
-    res.status(200).send({
-      status: 200,
-      message: 'Successfully refreshed a session!',
-      data: {
-        accessToken: session.accessToken,
-      },
-    });
+  res.status(200).send({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
 };
 
 export const logoutUserController = async (req, res, next) => {
@@ -71,4 +76,23 @@ export const logoutUserController = async (req, res, next) => {
   res.clearCookie('sessionId');
 
   res.status(204).end();
+};
+
+export const requestSendEmailController = async (req, res, next) => {
+  await requestSendToken(req.body.email);
+  res.send({
+    status: 200,
+    message: 'Reset password email has been successfully sent.',
+    data: {},
+  });
+};
+
+export const resetPasswordController = async (req, res) => {
+  const { password, token } = req.body;
+  await resetPassword(password, token);
+  res.json({
+    message: 'Password has been successfully reset.',
+    status: 200,
+    data: {},
+  });
 };
