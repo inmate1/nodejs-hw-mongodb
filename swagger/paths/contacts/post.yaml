@@ -1,0 +1,83 @@
+tags:
+  - Contacts
+
+summary: Create contact
+operationId: createContact
+description: 'Create a contact with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  description: Contact details to be created.
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - _id
+          - name
+          - phoneNumber
+          - userId
+        properties:
+          _id:
+            description: "Contact's unique identifier"
+            type: string
+            example: '65e4decdd286b30065d54af9'
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'Mike'
+          phoneNumber:
+            description: "Contact's phone number"
+            type: string
+            example: '+38097699544'
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'kasnd@aalkds.com'
+          isFavourite:
+            description: 'Determines whether the contact has been added to favorites.'
+            type: boolean
+            example: true
+          contactType:
+            description: 'What type of contact does it belong to'
+            type: string
+            enum:
+              - work
+              - home
+              - personal
+            example: 'personal'
+          userId:
+            description: "Contact's user id"
+            type: string
+            example: '65e4decdd286b30065d54af9'
+          photo:
+            description: "Link to contact's photo"
+            type: string
+            example: 'https://res.cloudinary.com/uqwgdu/image/upload/image.png'
+
+responses:
+  '201':
+    description: Successfully created a contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+              description: HTTP status code indicating successful creation.
+            message:
+              type: string
+              example: Successfully created a contact!
+              description: Confirmation message of successful contact creation.
+            data:
+              type: object
+              $ref: '../../components/schemas/contact.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

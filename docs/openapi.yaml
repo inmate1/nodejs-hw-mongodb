@@ -1,19 +1,59 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: <назва вашого додатку>
+  title: My contacts app
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description:
-    <опис вашого додатку>
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  description: Documentation of my contacts app
+
 tags:
-  # теги, що ви будете використовувати
+  - name: Contacts
+    description: Operations about contacts.
+  - name: Auth
+    description: Auth operations.
+
 servers:
-  - url: http://localhost:3000
-  - url: #посилання на задеплоєний сайт
+  - url: 'http://localhost:3000'
+  - url: 'https://nodejs-hw-mongodb-vryq.onrender.com'
+
 paths:
-  # тут будуть посилання на ендпоінти
+  /contacts:
+    get:
+      $ref: '../swagger/paths/contacts/get.yaml'
+    post:
+      $ref: '../swagger/paths/contacts/post.yaml'
+  /contacts/{id}:
+    get:
+      $ref: '../swagger/paths/contacts/{id}/get.yaml'
+    patch:
+      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
+    delete:
+      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
+  /register:
+    post:
+      $ref: '../swagger/paths/auth/register.yaml'
+  /login:
+    post:
+      $ref: '../swagger/paths/auth/login.yaml'
+  /refresh:
+    post:
+      $ref: '../swagger/paths/auth/refresh.yaml'
+  /logout:
+    post:
+      $ref: '../swagger/paths/auth/logout.yaml'
+  /send-reset-email:
+    post:
+      $ref: '../swagger/paths/auth/reset-email.yaml'
+  /reset-pwd:
+    post:
+      $ref: '../swagger/paths/auth/reset-password.yaml'
+  /get-oath-url:
+    get:
+      $ref: '../swagger/paths/auth/get-oauth-url.yaml'
+  /confirm-oauth:
+    post:
+      $ref: '../swagger/paths/auth/confirm-oauth.yaml'
 components:
   securitySchemes:
     bearerAuth:

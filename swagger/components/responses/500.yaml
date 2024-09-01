@@ -1,0 +1,17 @@
+description: Internal server error.
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 500
+          description: HTTP status code indicating an internal server error.
+        message:
+          type: string
+          example: 'Internal server error.'
+          description: Description of the internal server error.

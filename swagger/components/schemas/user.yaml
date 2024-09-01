@@ -1,0 +1,32 @@
+type: object
+required:
+  - name
+  - email
+  - password
+properties:
+  _id:
+    description: 'Unique identifier for the user'
+    type: string
+    example: '60d5f3f1234567890abcdef12'
+  name:
+    description: "User's name"
+    type: string
+    example: 'Mike'
+  email:
+    description: "User's email address"
+    type: string
+    example: 'miketyson@box.com'
+  password:
+    description: "User's password"
+    type: string
+    example: 'passsword123'
+  createdAt:
+    description: 'Timestamp when the user was created'
+    type: string
+    format: date-time
+    example: '2024-09-01T14:22:00Z'
+  updatedAt:
+    description: 'Timestamp when the user was last updated'
+    type: string
+    format: date-time
+    example: '2024-09-01T14:22:00Z'
