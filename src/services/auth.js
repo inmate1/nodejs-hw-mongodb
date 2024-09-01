@@ -12,7 +12,7 @@ import crypto, { randomBytes } from 'node:crypto';
 import { User } from '../db/models/user.js';
 import { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL } from '../constants/index.js';
 import { Session } from '../db/models/session.js';
-import { getFullNameFromGoogleTokenPayload, validateCode } from '../utils/googleOAuth2.js';
+import { getFullNameFromGoogleTokenPayload, validateGoogleOAuthCode } from '../utils/googleOAuth2.js';
 
 export const registerUser = async (payload) => {
   const maybeUser = await User.findOne({ email: payload.email });
@@ -151,7 +151,7 @@ export const resetPassword = async (password, token) => {
 };
 
 export const loginOrSignupWithGoogle = async (code) => {
-  const loginTicket = await validateCode(code);
+  const loginTicket = await validateGoogleOAuthCode(code);
   const payload = loginTicket.getPayload();
   if (!payload) throw createHttpError(401);
 
